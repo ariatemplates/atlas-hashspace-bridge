@@ -1,0 +1,46 @@
+/*
+ * Copyright 2012 Amadeus s.a.s.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+{CSSTemplate {
+    $classpath : 'test.binding.BindingCSS',
+    $prefix:false
+}}
+
+    /** Colors **/
+    {var blue = "#7aa1c9" /}
+    {var green = "#bacd81" /}
+
+    /** Font properties **/
+    {var font = {
+        size : "14pt",
+        weight : "bold",
+        family : "helvetica"
+    } /}
+
+
+    {macro main()}
+        .attpl {
+            background: #2ecc71;
+            border: solid 2px #27ae60;
+            padding: 10px;
+        }
+
+        .hsptpl {
+            background: #3498db;
+            border: solid 2px #2980b9;
+            padding: 10px;
+        }
+    {/macro}
+
+{/CSSTemplate}

@@ -1,0 +1,33 @@
+var klass = require("hsp/klass");
+var atlas = require("bridge/hsp/atlas.hsp").atlas;
+var PageCtrl = klass({
+    attributes:{
+        "moduleCtrl":{type:"object", defaultValue:{}, binding:"2-way"},
+        "data":{type:"object", defaultValue:{}, binding:"2-way"},
+        "id":{type:"object", binding:"2-way"}
+    }
+});
+
+# export template page using c:PageCtrl
+    <div class="hsptpl">
+        HASHSPACE OUTER
+        <br/>
+
+        //Bridge to AT widgets
+        <#atlas wlib="aria.widgets.AriaLib" name="List" config="{getConfig(c)}"/>
+
+    </div>
+# /template
+
+var getConfig = function(c) {
+    return {
+        id: "myId",
+        minWidth:200,
+        bind: {
+            items: {
+              to: "italian",
+              inside: c.data
+            }
+        }
+    };
+};

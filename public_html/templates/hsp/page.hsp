@@ -1,6 +1,5 @@
 var klass = require("hsp/klass");
-var bridge = require("bridge/hsp/bridge.hsp").bridge;
-var widgetbridge = require("bridge/hsp/widgetbridge.hsp").widgetbridge;
+var atlas = require("bridge/hsp/atlas.hsp").atlas;
 var PageCtrl = klass({
     attributes:{
         "moduleCtrl":{type:"object", defaultValue:{}, binding:"2-way"},
@@ -15,21 +14,29 @@ var PageCtrl = klass({
 
         <br/><br/>
 
-        //Bridge to AT template
-        <#bridge classpath="templates.aria.Page2" moduleCtrl="{c.moduleCtrl}"/>
+        //Bridge to AT widgets
+        <#atlas name="Template" config="{getTemplateConfig(c)}"/>
 
         //Bridge to AT widgets
-        <#widgetbridge wlib="aria.widgets.AriaLib" name="TextField" config="{getTextFieldConfig(c)}"/>
+        <#atlas wlib="aria.widgets.AriaLib" name="TextField" config="{getTextFieldConfig(c)}"/>
         {c.data.value}
         <hr/>
-        <#widgetbridge wlib="aria.widgets.AriaLib" name="DatePicker" config="{getDatePickerConfig(c)}"/>
+        <#atlas wlib="aria.widgets.AriaLib" name="DatePicker" config="{getDatePickerConfig(c)}"/>
         {c.data.dateValue}
         <hr/>
         @touch:DoubleSlider
-        <#widgetbridge wlib="aria.touch.widgets.TouchWidgetLib" name="DoubleSlider" config="{getDoubleSliderConfig(c)}"/>
+        <#atlas wlib="aria.touch.widgets.TouchWidgetLib" name="DoubleSlider" config="{getDoubleSliderConfig(c)}"/>
         {c.data.sliderValue}
     </div>
 # /template
+
+var getTemplateConfig = function(c) {
+    return {
+        id:"mySecondTemplate",
+        defaultTemplate: "templates.aria.Page2",
+        data: c.data
+    };
+};
 
 var getTextFieldConfig = function(c) {
     return {

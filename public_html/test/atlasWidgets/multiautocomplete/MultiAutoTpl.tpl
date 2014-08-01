@@ -13,18 +13,33 @@
  * limitations under the License.
  */
 
-/**
- * Test suite grouping all tests
- */
-var Aria = require("ariatemplates/Aria");
-module.exports = Aria.classDefinition({
-    $classpath : "test.hsbridge.FirstTest",
-    $extends : require("ariatemplates/jsunit/TestCase"),
-    $prototype : {
-        "test Noder is loaded" : function () {
-            var a = require("templates/hsp/hello.hsp");
-            console.log("hsp"+a.hello);
-            this.assertTruthy(noder);
-        }
-    }
-});
+{Template {
+    $classpath:"test.atlasWidgets.multiautocomplete.MultiAutoTpl",
+    $wlibs : {
+      'hsp' : 'bridge.aria.widget.BridgeWidgetLib'
+    },
+    $hasScript:true
+}}
+
+
+
+
+    {macro main()}
+
+        <h2>MultiAutoComplete</h2>
+        <br />
+
+        {@hsp:Template {
+          id: "hspid",
+          type:"div",
+          hsp: {
+              src: getHsp(),
+              args:[{data: data}]
+          }
+        } /}
+
+         <br />
+         <input {id "justToFocusOut"/}>
+    {/macro}
+
+{/Template}

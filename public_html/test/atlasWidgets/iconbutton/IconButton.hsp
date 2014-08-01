@@ -1,0 +1,32 @@
+var klass = require("hsp/klass");
+var atlas = require("bridge/hsp/atlas.hsp").atlas;
+var Json = require("ariatemplates/utils/Json");
+
+var PageCtrl = klass({
+    attributes:{
+        "moduleCtrl":{type:"object", defaultValue:{}, binding:"2-way"},
+        "data":{type:"object", defaultValue:{}, binding:"2-way"},
+        "id":{type:"object", binding:"2-way"}
+    }
+});
+
+{export template page using c:PageCtrl}
+    <div class="hsptpl">
+    HASHSPACE OUTER<br/>
+
+        //Bridge to AT widgets
+        <#atlas wlib="aria.widgets.AriaLib" name="IconButton" config="{getConfig(c)}"/>
+
+    </div>
+{/template}
+
+var getConfig = function(c) {
+    return {
+            id:"myId",
+            sourceImage:{ path:aria.core.DownloadMgr.resolveURL("test/atlasWidgets/iconbutton/icon-check.png"), width:42},
+            label:"mybutton",
+            onclick: function(){
+                Json.setValue(c.data, "value", !c.data.value);
+            }
+        };
+};

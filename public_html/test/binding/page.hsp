@@ -1,0 +1,45 @@
+var klass = require("hsp/klass");
+var atlas = require("bridge/hsp/atlas.hsp").atlas;
+var PageCtrl = klass({
+    attributes:{
+        "moduleCtrl":{type:"object", defaultValue:{}, binding:"2-way"},
+        "data":{type:"object", defaultValue:{}, binding:"2-way"},
+        "id":{type:"object", binding:"2-way"}
+    }
+});
+
+{export template page using c:PageCtrl}
+    <div class="hsptpl">
+        HASHSPACE OUTER<br/>
+        Input: 
+        <input type="text" id="hspOuter" value="{c.data.value}"/>
+        <br/>
+        //Bridge to Atlas widgets
+        <#atlas wlib="aria.widgets.AriaLib" name="Template" config="{getTemplateConfig(c)}"/>
+
+        //Bridge to Atlas widgets
+        <#atlas name="TextField" config="{getTextFieldConfig(c)}"/>
+    </div>
+{/template}
+
+var getTemplateConfig = function(c) {
+    return {
+        id:"myTemplate",
+        defaultTemplate: "test.binding.BindingInclude",
+        data: c.data
+    };
+};
+
+var getTextFieldConfig = function(c) {
+    return {
+        id : "hspWidget",
+        label : '@aria:TextField',
+        bind : {
+            'value' : {
+                inside : c.data,
+                to : 'value'
+             }
+        }
+    };
+};
+

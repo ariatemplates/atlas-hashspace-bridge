@@ -47,6 +47,11 @@ Aria.classDefinition({
         // does the normalization
         this._checkCfgConsistency(cfg);
     },
+
+    $destructor : function () {
+        this.tplInstance.$dispose();
+        this.$BaseWidget.$destructor.call(this);
+    },
     $prototype : {
         $init : function (p) {
             var src = aria.templates.TemplateTrait.prototype;
@@ -76,12 +81,10 @@ Aria.classDefinition({
             bridge.aria.widget.Bridge.superclass.initWidget.call(this);
             var tplDiv = aria.utils.Dom.getElementById(this._domId);
             //tplDiv.className = tplDiv.className + " " + this._cssClassNames;
-            var args = {moduleCtrl: this._cfg.moduleCtrl};
-            if (this._cfg.moduleCtrl) {
-                args.data = this._cfg.moduleCtrl.getData();
-            }
+            var args = this._tplcfg.args;
             var hspTemplate = this._tplcfg.hsp;
-            hspTemplate.apply(hspTemplate, args).render(tplDiv);
+            this.tplInstance = hspTemplate.apply(hspTemplate, args)
+            this.tplInstance.render(tplDiv);
         },
 
         /**
