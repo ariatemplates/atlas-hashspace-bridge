@@ -66,7 +66,7 @@ Aria.beanDefinitions({
             $restricted : false,
             $properties : {
                 "src" : {
-                    $type : "json:ObjectRef",
+                    $type : "json:FunctionRef",
                     $description : "Hashspace template.",
                     $mandatory : true
                 },

@@ -1,0 +1,104 @@
+var klass = require("hsp/klass");
+var atlas = require("bridge/hsp/atlas.hsp").atlas;
+var PageCtrl = klass({
+    attributes:{
+        "moduleCtrl":{type:"object", defaultValue:{}, binding:"2-way"},
+        "data":{type:"object", defaultValue:{}, binding:"2-way"},
+        "id":{type:"object", binding:"2-way"}
+    }
+});
+
+{export template page using c:PageCtrl}
+    <div class="hsptpl">
+        HASHSPACE OUTER
+        <br/>
+
+        //Bridge to AT widgets
+        <#atlas wlib="aria.widgets.AriaLib" name="MultiAutoComplete" config="{getTextFieldConfig(c)}"/>
+
+    </div>
+{/template}
+
+var getTextFieldConfig = function(c) {
+    return {
+        label:"Choose your city: ",
+        id:"MultiAutoId",
+        labelPos:"left",
+        labelAlign:"right",
+        width:600,
+        popupWidth:c.data.popupWidth,
+        block:false,
+        labelWidth:180,
+        expandButton: (c.data.expandButton == true),
+        maxOptions: c.data.maxOptions || 8,
+        freeText: (c.data.freeText !== false),
+        resourcesHandler: getAirLinesHandler(),
+        bind:{
+              "value" : {
+                  inside : c.data,
+                  to : 'ac_airline_values'
+              }
+        },
+        spellCheck: false
+    };
+};
+
+
+
+var lcr = require("ariatemplates/resources/handlers/LCRangeResourceHandler");
+this._airLineHandler = new lcr({
+    allowRangeValues : true,
+    labelMatchAtWordBoundaries : true
+});
+this._airLineHandler.setSuggestions([{
+        label : 'Air France',
+        code : 'AF'
+
+    }, {
+        label : 'Air Canada',
+        code : 'AC'
+    }, {
+        label : 'Finnair',
+        code : 'XX'
+    }, {
+        label : 'Qantas',
+        code : '--'
+    }, {
+        label : 'American Airlines',
+        code : 'AA'
+    }, {
+        label : 'Emirates',
+        code : 'EK'
+    }, {
+        label : 'P1.some',
+        code : 'P1'
+    }, {
+        label : 'P2.kon',
+        code : 'P2'
+    }, {
+        label : 'P3.red',
+        code : 'P3'
+    }, {
+        label : 'P4.redd',
+        code : 'P4'
+    }, {
+        label : 'P5.loreum',
+        code : 'P5'
+    }, {
+        label : 'P6.ipsum',
+        code : 'P6'
+    }, {
+        label : 'P7.lomeo',
+        code : 'P7'
+    }, {
+        label : 'P8.amino',
+        code : 'P8'
+    }, {
+        label : 'Scandinavian Airlines System',
+        code : 'SK'
+    }]);
+
+var that=this;
+var getAirLinesHandler = function () {
+    return that._airLineHandler;
+}

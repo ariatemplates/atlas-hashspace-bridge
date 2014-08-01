@@ -1,0 +1,16 @@
+var klass = require("hsp/klass");
+var atlas = require("bridge/hsp/atlas.hsp").atlas;
+var PageCtrl = klass({
+    attributes:{
+        "moduleCtrl":{type:"object", defaultValue:{}, binding:"2-way"},
+        "data":{type:"object", defaultValue:{}, binding:"2-way"}
+    }
+});
+
+# export template page using c:PageCtrl
+    <div class="hsptpl">
+    HASHSPACE INNER<br/>
+    Input: <input type="text" id="hspInner" value="{c.data.value}"/><br/>
+    </div>
+# /template
+

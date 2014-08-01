@@ -30,12 +30,12 @@
     }/}
 
     //Bridge to hashspace
-    {@hsp:Bridge {
+    {@hsp:Template {
       id: "hspid",
       type:"div",
       hsp: {
           src: getHsp(),
-          args:[this.moduleCtrl]
+          args:[{moduleCtrl: this.moduleCtrl, data: data}]
       }
     } /}
   </div>

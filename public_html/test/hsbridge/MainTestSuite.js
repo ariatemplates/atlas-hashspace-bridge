@@ -23,5 +23,10 @@ Aria.classDefinition({
         this.$TestSuite.constructor.call(this);
 
         this.addTests("test.hsbridge.FirstTest");
+        this.addTests("test.binding.BindingTest");
+        this.addTests("test.atlasWidgets.iconbutton.IconButtonTest");
+        this.addTests("test.atlasWidgets.list.ListTest");
+        this.addTests("test.atlasWidgets.multiautocomplete.MultiAutoTest");
+        // this.addTests("test.atlasWidgets.tooltip.TooltipTest");
     }
 });

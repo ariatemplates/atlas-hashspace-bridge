@@ -1,0 +1,92 @@
+var klass = require("hsp/klass");
+var idCounter = 0;
+var tplCtxt = new aria.templates.TemplateCtxt();
+exports.tplCtxt = tplCtxt;
+require("bridge/aria/Empty.tpl");
+tplCtxt.initTemplate({classpath: "bridge.aria.Empty"}); // check if it can be done in a better
+                                                                                // way
+tplCtxt.getMarkup();
+tplCtxt.linkToPreviousMarkup(document.createElement("div"));
+
+var WidgetBridgeCtrl = klass({
+    attributes:{
+        "content":{type:"template", defaultContent:true},
+        "wlib":{type:"string", defaultValue:"aria.widgets.AriaLib", binding:"1-way"},
+        "name":{type:"string", defaultValue:"", binding:"1-way"},
+        "id":{type:"string", binding:"1-way"},
+        "config":{type:"object", defaultValue:{}, binding:"1-way"}
+    },
+    $init: function (parent) {
+        if (this.id == "") {
+            this.id = "atwidget_" + idCounter++;
+        }
+    },
+    $afterRender: function() {
+        this.loadSection();
+    },
+
+    _afterLoad: function (lib) {
+        var out = new aria.templates.MarkupWriter(tplCtxt);
+        // TODO: manage the content in case of containers (like Div widget)
+        // if(this.content && false){
+        // var widgInst = lib.processWidgetMarkupBegin(this.name, out, this.config);
+        //
+        // widgInst.writeMarkupEnd(out);
+        // }
+        // else{
+            lib.processWidgetMarkup(this.name, out, this.config);
+        // }
+        this.section = out.getSection();
+        tplCtxt._mainSection.addSubSection(this.section);
+        var domElt = aria.utils.Dom.replaceHTML(this.id, this.section.html);
+        this.section.setDom(domElt);
+        aria.utils.Delegate.addExpando(domElt, this.section.delegateId);
+        this.section.initWidgets();
+    },
+
+    $dispose: function () {
+        this.disposeSection();
+    },
+
+    disposeSection: function () {
+        if (this.section) {
+            tplCtxt._mainSection.removeSubSection(this.section);
+            this.section.$dispose();
+            this.section = null;
+        }
+    },
+
+    loadSection: function () {
+        var lib = Aria.getClassRef(this.wlib);
+        var dependencies = lib.getWidgetDependencies(this.name);
+        Aria.load({
+            classes : dependencies,
+            oncomplete: {
+                fn: this._afterLoad,
+                args: lib,
+                scope: this
+            }
+        });
+    },
+
+    reloadSection: function () {
+        this.disposeSection();
+        this.loadSection();
+    },
+
+    onConfigChange: function() {
+        this.reloadSection();
+    },
+
+    onNameChange: function() {
+        this.reloadSection();
+    }
+
+});
+
+exports.bridge = WidgetBridgeCtrl;
+
+{export template atlas using c:WidgetBridgeCtrl}
+    <div id="{c.id}">
+    </div>
+{/template}
