@@ -6,7 +6,7 @@
     <!-- To serve non-minified files, it's also needed to change gruntfile's path to /aria -->
     <!-- script type="text/javascript" src="./aria/bootstrap.js" /script -->
     <!-- script type="text/javascript" src="./aria/css/atskin.js" /script -->
-    <script type="text/javascript" src="./aria/ariatemplates-1.6.0-beta.3.js">
+    <script type="text/javascript" src="./aria/ariatemplates-1.6.4.js">
     {
         packaging : {
           preprocessors: [{
@@ -22,7 +22,7 @@
         }
     }
     </script>
-    <script type="text/javascript" src="./aria/css/atskin-1.6.0-beta.3.js"></script>
+    <script type="text/javascript" src="./aria/css/atskin-1.6.4.js"></script>
     <script type="text/javascript" src="./hashspace/hashspace-noder.min.js"></script>
     <script type="text/javascript" src="./hashspace/hashspace-noder-compiler.min.js"></script>
   </head>
@@ -30,7 +30,7 @@
     <div id="outputHSP"></div>
     <div id="outputAT"></div>
 
-    <script type="noder">
+    <script type="application/x-noder">
         var hello = require("templates/hsp/hello.hsp").hello;
         hello().render("outputHSP");
 
